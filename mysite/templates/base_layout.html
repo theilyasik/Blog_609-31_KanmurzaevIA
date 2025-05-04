@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}My Blog{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+  <header class="site-header">
+    <!-- Логотип: ведёт на список статей -->
+    <div class="logo">
+      <a href="{% url 'article_list' %}">📝 MyBlog</a>
+    </div>
+
+    <!-- Навигация -->
+    <nav class="site-nav">
+  <ul>
+    <li><a href="{% url 'article_list' %}">All articles</a></li>
+    {% if user.is_authenticated %}
+      <li><a href="{% url 'logout' %}">Logout</a></li>
+    {% else %}
+      <li><a href="{% url 'login' %}">Login</a></li>
+      <li><a href="{% url 'signup' %}">Sign Up</a></li>
+    {% endif %}
+  </ul>
+</nav>
+  </header>
+
+  <main class="content">
+      {% block content %}
+    {% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; MyBlog</p>
+  </footer>
+
+</body>
+</html>

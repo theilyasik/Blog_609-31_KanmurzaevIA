@@ -1,0 +1,20 @@
+{% extends "base_layout.html" %}
+{% block title %}Главная{% endblock title %}
+
+{% block content %}
+  <div class="homepage-hero">
+    <h1>Welcome to my site!</h1>
+    <p>Here we are talking about IT.</p>
+  </div>
+
+  <section class="articles">
+    {% for element in articles|slice:":3" %}
+      <article class="article_item">
+        <h2><a href="{% url 'article_detail' slug=element.slug %}">{{ element.title }}</a></h2>
+        <p>{{ element.snippet }}</p>
+        <time>{{ element.date|date:"d M Y" }}</time>
+      </article>
+    {% endfor %}
+  </section>
+{% endblock content %}
+
