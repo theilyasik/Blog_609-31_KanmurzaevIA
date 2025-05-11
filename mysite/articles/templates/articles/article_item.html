@@ -6,7 +6,7 @@
 {% block content %}
   <div class="container">
     <nav class="breadcrumbs">
-      <a class="btn btn--ghost" href="{% url 'homepage' %}">← Все статьи</a>
+      <a class="btn-secondary" href="{% url 'homepage' %}">← Все статьи</a>
     </nav>
 
     <article class="article-detail">
@@ -24,6 +24,19 @@
       <div class="article-detail__body">
         {{ article.body|linebreaks }}
       </div>
+
+      {% if user.is_authenticated and user.id == article.author_id %}
+        <div class="article-detail__actions">
+          <a class="btn btn-warning"
+             href="{% url 'articles:article_update' slug=article.slug %}">
+            Update
+          </a>
+          <a class="btn btn-danger"
+             href="{% url 'articles:article_delete' slug=article.slug %}">
+            Delete
+          </a>
+        </div>
+      {% endif %}
     </article>
   </div>
 {% endblock content %}
