@@ -1,16 +1,29 @@
 {% extends "base_layout.html" %}
+{% load static %}
+
 {% block title %}{{ article.title }}{% endblock title %}
 
 {% block content %}
-  <article class="article-detail">
-    {% if article.thumbnail %}
-      <img src="{{ article.thumbnail.url }}" alt="{{ article.title }}">
-    {% endif %}
-    <h1>{{ article.title }}</h1>
-    <time>{{ article.date|date:"d M Y, H:i" }}</time>
-    <div class="article-body">
-      {{ article.body|linebreaks }}
-    </div>
-  </article>
-{% endblock content %}
+  <div class="container">
+    <nav class="breadcrumbs">
+      <a class="btn btn--ghost" href="{% url 'homepage' %}">← Все статьи</a>
+    </nav>
 
+    <article class="article-detail">
+      {% if article.thumbnail %}
+        <div class="article-detail__thumb">
+          <img src="{{ article.thumbnail.url }}" alt="{{ article.title }}">
+        </div>
+      {% endif %}
+
+      <h1 class="article-detail__title">{{ article.title }}</h1>
+      <time class="article-detail__date">
+        {{ article.date|date:"j F Y, H:i" }}
+      </time>
+
+      <div class="article-detail__body">
+        {{ article.body|linebreaks }}
+      </div>
+    </article>
+  </div>
+{% endblock content %}

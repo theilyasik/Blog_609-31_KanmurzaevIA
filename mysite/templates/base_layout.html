@@ -11,18 +11,31 @@
   <header class="site-header">
     <!-- Логотип: ведёт на список статей -->
     <div class="logo">
-      <a href="{% url 'article_list' %}">📝 MyBlog</a>
+        <a href="{% url 'homepage' %}">📝 MyBlog</a>
     </div>
 
     <!-- Навигация -->
     <nav class="site-nav">
   <ul>
-    <li><a href="{% url 'article_list' %}">All articles</a></li>
+    <li>
+        <a href="{% url 'homepage' %}">Homepage</a>
+    </li>
+    <li>
+        <a href="{% url 'homepage' %}">All articles</a>
+    </li>
+    <li>
+        <a href="{% url 'about' %}">About</a>
+    </li>
     {% if user.is_authenticated %}
-      <li><a href="{% url 'logout' %}">Logout</a></li>
+      <li>
+          <form class="form" action="{% url 'accounts:logout' %}" method="post">
+              {% csrf_token %}
+              <button type="submit">Logout</button>
+          </form>
+      </li>
     {% else %}
-      <li><a href="{% url 'login' %}">Login</a></li>
-      <li><a href="{% url 'signup' %}">Sign Up</a></li>
+      <li><a href="{% url 'accounts:login' %}">Login</a></li>
+      <li><a href="{% url 'accounts:signup' %}">Sign Up</a></li>
     {% endif %}
   </ul>
 </nav>

@@ -1,27 +1,30 @@
 {% extends "base_layout.html" %}
-{% block title %}Список статей{% endblock title %}
+{% block title %}Список статей{% endblock %}
 
 {% block content %}
-  <div class="auth-buttons">
+  <div class="list-header">
+    <h1>Список статей</h1>
     {% if user.is_authenticated %}
-      <form action="{% url 'logout' %}" method="post" style="display:inline;">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-logout">Logout</button>
-      </form>
+      <a href="{% url 'articles:article_create' %}" class="btn btn--primary">Создать статью</a>
     {% else %}
-      <a class="btn btn-login" href="{% url 'login' %}">Login</a>
-      <a class="btn btn-signup" href="{% url 'signup' %}">Sign Up</a>
+      <a href="{% url 'accounts:login' %}" class="btn btn--ghost">Login</a>
+      <a href="{% url 'accounts:signup' %}" class="btn btn--primary">Sign Up</a>
     {% endif %}
   </div>
 
-  <h1 class="text-center mt-1">Список статей</h1>
-  <div class="articles">
-    {% for element in articles %}
-      <article class="article_item">
-        <h2><a href="{% url 'article_detail' slug=element.slug %}">{{ element.title }}</a></h2>
-        <p>{{ element.snippet }}</p>
-        <time>{{ element.date|date:"d M Y, H:i" }}</time>
-      </article>
+  <div class="articles-grid">
+    {% for article in articles %}
+      <div class="card">
+        <h2 class="card__title">
+          <a href="{% url 'articles:article_detail' slug=article.slug %}">
+            {{ article.title }}
+          </a>
+        </h2>
+        <p class="card__snippet">{{ article.snippet }}</p>
+        <time class="card__date">{{ article.date|date:"d M Y, H:i" }}</time>
+      </div>
+    {% empty %}
+      <p>Статей пока нет.</p>
     {% endfor %}
   </div>
-{% endblock content %}
+{% endblock %}
